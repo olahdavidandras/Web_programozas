@@ -8,6 +8,11 @@ class Cart
      */
     private array $items = [];
 
+    public function getItems(): array
+    {
+        return $this->items;
+    }
+
     // TODO Generate getters and setters of properties
 
     /**
