@@ -70,7 +70,7 @@ class Product
      */
     public function addToCart(Cart $cart, int $quantity): CartItem
     {
-        //TODO Implement method
+        return $cart->addProduct($this, $quantity);
     }
 
     /**
@@ -78,8 +78,8 @@ class Product
      *
      * @param Cart $cart
      */
-    public function removeFromCart(Cart $cart)
+    public function removeFromCart(Cart $cart): void
     {
-        //TODO Implement method
+        $cart->removeProduct($this);
     }
 }

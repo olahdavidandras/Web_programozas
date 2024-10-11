@@ -33,12 +33,12 @@ class CartItem
     }
 
 
-    public function increaseQuantity()
+    public function increaseQuantity(): void
     {
-        if ($this->quantity < Product::$availableQuantity) {
+        if ($this->quantity < $this->product->getAvailableQuantity()) {
             $this->quantity++;
         } else {
-            throw new \Exception("Nem lehet belole tobb!");
+            throw new \Exception("Nem lehet belőle több!");
         }
     }
 

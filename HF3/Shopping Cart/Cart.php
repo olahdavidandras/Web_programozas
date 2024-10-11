@@ -28,7 +28,18 @@ class Cart
      */
     public function addProduct(Product $product, int $quantity): CartItem
     {
-        //TODO Implement method
+        foreach ($this->items as $item) {
+            if ($item->getProduct()->getId() === $product->getId()) {
+                $newQuantity = min($item->getQuantity() + $quantity, $product->getAvailableQuantity());
+                $item->setQuantity($newQuantity);
+                return $item;
+            }
+        }
+        $newQuantity = min($quantity, $product->getAvailableQuantity());
+        $cartItem = new CartItem($product, $newQuantity);
+        $this->items[] = $cartItem;
+
+        return $cartItem;
     }
 
     /**
@@ -36,9 +47,15 @@ class Cart
      *
      * @param Product $product
      */
-    public function removeProduct(Product $product)
+    public function removeProduct(Product $product): void
     {
-        //TODO Implement method
+        foreach ($this->items as $index => $item) {
+            if ($item->getProduct()->getId() === $product->getId()) {
+                unset($this->items[$index]);
+                $this->items = array_values($this->items);
+                return;
+            }
+        }
     }
 
     /**
@@ -48,7 +65,11 @@ class Cart
      */
     public function getTotalQuantity(): int
     {
-        //TODO Implement method
+        $totalQuantity = 0;
+        foreach ($this->items as $item) {
+            $totalQuantity += $item->getQuantity();
+        }
+        return $totalQuantity;
     }
 
     /**
@@ -58,6 +79,10 @@ class Cart
      */
     public function getTotalSum(): float
     {
-        //TODO Implement method
+        $totalSum = 0.0;
+        foreach ($this->items as $item) {
+            $totalSum += $item->getProduct()->getPrice() * $item->getQuantity();
+        }
+        return $totalSum;
     }
 }
